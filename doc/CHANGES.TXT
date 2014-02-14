@@ -1,0 +1,129 @@
+--------------------------------------------------------------------------------------------------
+
+::CHANGES.TXT::
+
+--------------------------------------------------------------------------------------------------
+
+
+Changes are recorded in the following format:
+
+
+<Date of Release> - <Version>
+
+- CHANGE [FILE(S)]
+
+description
+
+--------------------------------------------------------------------------------------------------
+
+CHANGES...
+
+--------------------------------------------------------------------------------------------------
+October 31st 2012 - ScorchOS 0.1.5
+- Fixed the timer driver that somehow dissapeared from the SVN Repo version [SRC/TIMER.C]
+- Made the Comments better, Everything is labled save the klude of a shell
+- Reorderd a few things in various files
+- No new features yet, just house cleaning
+
+December 20th 2010 - ScorchOS 0.1
+- ANSI STANDARD STRING SUPPORT [SRC/STRING.C, INCLUDES/STRING.H]
+Provides ANSI Standard libc string support throughout the kernel. This was only partially implemented
+with previous kernel versions
+
+- UPDATED KEYBOARD DRIVER [SRC/KB.C, INCLUDES/KB.H]
+Now supports special keys such as cmd, alt, shift, caps lock and nums lock. Also supports lighting
+up the relevant LEDs on the keyboard when caps lock and nums lock are activated/deactivated.
+Also a number of ANSI standard C get_char functions provided, and most moved to a dedicated
+header file.
+
+- NEW SHELL [SRC/SHELL.C]
+Dropped vterm.c in favour of an updated shell that makes use of all the new libc and keyboard
+elements. The backspace and atoi bugs that plagued 0.0.7 has also been fixed. Addition of
+exponent function and a new string parsing algorithm. Also supports user logins.
+
+- UPDATED BUILD SCRIPTS [BUILD.BAT, LINBUILD.SH, SRC/INCLUDES/MBOOT.H, SRC/MAIN.C, SRC/START.S]
+Both now work without requiring a cross-compiler by specifying the relevant architecture at
+compile and link stages of the kernel build. Linux build script no longer requires root
+permissions to run (prompts when needed).
+ScorchOS is now generated as an ELF binary rather than a plain binary. This makes things easier
+while using a GCC cross-compiler and gives us the potential to access MBOOT information
+from grub in future versions of the kernel.
+
+- USE OF MAKEFILES FOR BUILDS [MAKEFILE, LINBUILD.SH]
+No longer requires build scripts to contain definitions for particular cross compilers, and
+works across both build platforms.
+
+- UPDATED SCRIPTS/DOCUMENTATION
+Cleaned up a number of unneeded scripts and folders from the source distribution, and also cleared
+up redundant license documents.
+
+
+- BOCHS SUPPORT ON WINDOWS AND LINUX [BOCHSRC.TXT, BOCHSOUT.TXT, LINBOCHS.SH]
+There is now rudimentary support for the BOCHS emulator on Windows and Linux operating systems.
+
+
+March 17th 2009 - ScorchOS 0.0.7 Patch 1
+- NUMEROUS SHELL BUG-FIXES [SRC/SHELL.C, SRC/VTERM.C, SRC/KB.C, SRC/INCLUDE/SYSTEM.H, SRC/SCRN.C)
+These include:
+   * add/take commands handling input more gracefully
+   * rewritten atoi() function
+   * backspace bug partially fixed (now allows removal of many characters and replacement of one)
+   * blinking cursor bug partially fixed (now arrives on the correct line for command input)
+
+- REMOVAL OF DEBUGGING MEASURES [ALL FILES]
+These should have been removed for the original ScorchOS 0.0.7 release but for reasons completely
+beyond me, they weren't! They have either been removed entirely or commented out
+
+
+March 7th 2009 - ScorchOS 0.0.7
+- NEW LICENSE [ALL FILES]
+Unlike ApolloOS, ScorchOS is licensed under the Apache License v2. A copy of the license is available
+in DOC/LICENSE-2.0.TXT, how it applies to this project is informally explained in DOC/LICENSENOTES.TXT
+and all attribution information is contain within DOC/NOTICE.TXT
+
+- SOME COMMANDS ADDED [SHELL.C]
+
+
+A full list of all commands is included and can be accessed with "ahelp". 
+Add and print do not work but the short manuals have been included, soon as well for the others.
+
+
+
+- CONSOLE/SHELL INPUT SUPPORT [SRC/INCLUDE/COMMANDS.INC, SRC/VTERM.C, SRC/SHELL.C, SRC/KB.C, SRC/INCLUDE/SYSTEM.H]
+as you can see this has been the main focus of this release. Users can now input commands using the keyboard, then
+watch as pressing enter will then run a command (or tell them it doesn't exist, if that's the case).
+
+- SHORTER COUNTDOWN [SRC/TIMER.C]
+now counts for 5 seconds at start-up instead of 10, and also outputs 'Countdown Complete!' when finished rather
+ than suggest an infinite loop!
+
+- NEW CHANGE LOG [DOC/CHANGES.TXT]
+introduction of this file to help developers know differences between releases and work done
+
+
+- ALTERED TOP-OF-PAGE LICENSE NOTICE [ALL AFFECTED FILES]
+Removal of 'based on MikeOS 1.4.2 and bkerndev' as this has misled people with the previous release.
+ These two projects will now be acknowledged in DOC/NOTICE.TXT
+
+
+- MOVE CREDITS.TXT to DOC Directory & Updated[DOC/NOTICE.TXT]
+To keep continuity of documentation and to acknowledge various people/projects
+
+- UPDATE README.TXT [README.TXT]
+Removed incorrect information, updated shell script addresses and added how to use shell scripts to mount/unmount 
+the floppy image to take a look.
+
+
+- CORRECTED ALL VERSION BRANDING [ALL FILES]
+They should all now refer to 'ScorchOS 0.0.7' rather than 'ApolloOS 0.1'
+
+- NEW SOURCE MAP [DOC/SOURCEMAP.TXT]
+This file is a quick guide to where everything is and what it does
+
+--------------------------------------------------------------------------------------------------
+
+October 2008 - ApolloOS 0.0.5
+
+NEW RELEASE [ALL FILES]
+
+Yes, this was the first ever release!

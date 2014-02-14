@@ -1,0 +1,9 @@
+megs: 32
+display_library: sdl
+romimage: file=$BXSHARE/BIOS-bochs-latest, address=0xe0000
+floppya: 1_44=/disk_images/scorch.img, status=inserted
+boot: a
+log: bochsout.txt
+mouse: enabled=0
+clock: sync=realtime
+cpu: ips=500000 

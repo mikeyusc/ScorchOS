@@ -1,0 +1,45 @@
+--------------------------------------------------------------------------------------------------
+
+::SOURCEMAP.TXT::
+
+--------------------------------------------------------------------------------------------------
+
+ROOT FOLDER:
+
+build.bat - Windows build script (requires a suitable Cygwin or DJGPP environment)
+linbuild.sh - Linux build script
+linmount.sh - Linux floppy image mount script
+lintest.sh - Linux test script (requires qemu)
+linunmount.sh - Linux floppy image unmount script
+README.TXT - Important information all users of this source code should read (and a nice intro...!)
+
+app folder:
+	(currently empty. Future kernels that support external binaries will provide an API here)
+
+disk_images folder:
+	scorch.img - ScorchOS bootable floppy image - compiled version of the bundled source code
+
+doc folder:
+	CHANGES.TXT - Changes to source code since the last release
+	LICENSE.TXT - BSD Style License and record of contributors
+	SOURCEMAP.TXT - This file, outlining what is going on with the source code
+
+src folder:
+	include
+		command.h - Contains references to all the functions associated with shell commands
+		kb.h - Contains references to all the internal keyboard driver functions
+		string.h - Contains references to all the ANSI standard string functions
+		system.h - Contains references to important public functions in various kernel modules
+	
+	gdt.c - Kernel module for Global Descriptor Table
+	idt.c - Kernel module for Interrupt Descriptor Table
+	irq.c - Kernel module for Interrupt Handlers
+	isrs.c - Kernel module for Specialised Interrupt Handling
+	kb.c -  Keyboard driver
+	kernel.c - The main kernel module that controls kernel execution
+	link.ld - Kernel Linker file (important for kernel builds)
+	scrn.c - Kernel module for VGA graphics output
+	shell.c - Command Line interface to the kernel
+	start.s - Bootloader supplement for Grub bootloader
+	string.c - ANSI C standard string functions
+	timer.c - Kernel module for system timer
