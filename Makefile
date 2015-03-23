@@ -7,7 +7,7 @@ C_COMPILER=i586-elf-gcc
 ASM_COMPILER=nasm
 LINKER=i586-elf-ld
 
-CFLAGS=-I./src/include -fleading-underscore -O -ffreestanding
+CFLAGS=-I./src/include -fleading-underscore -O -ffreestanding -finline-functions-called-once -nostdlib
 LDFLAGS=-T./src/link.ld
 ASFLAGS=-felf
 
