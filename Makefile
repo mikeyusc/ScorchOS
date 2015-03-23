@@ -7,17 +7,18 @@ C_COMPILER=i586-elf-gcc
 ASM_COMPILER=nasm
 LINKER=i586-elf-ld
 
-CFLAGS=-I./src/include -fleading-underscore -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin
+CFLAGS=-I./src/include -fleading-underscore -O -ffreestanding
 LDFLAGS=-T./src/link.ld
 ASFLAGS=-felf
 
-SOURCES=src/start.o src/kernel.o src/scrn.o src/gdt.o src/idt.o src/isrs.o src/irq.o src/timer.o src/kb.o src/shell.o src/common.o src/string.o
+SOURCES= $(shell ls src/*.c)
+OBJECTS= $(SOURCES:.c=.o)
 
-all: $(SOURCES) link
+all: $(OBJECTS) link
 clean:
 	-rm ./src/*.o
 link:
-	$(LINKER) $(LDFLAGS) -o bin/kernel.x $(SOURCES)
+	$(LINKER) $(LDFLAGS) -o bin/kernel.x $(OBJECTS)
 .c.o:
 	$(C_COMPILER) $(CFLAGS) -c $< -o $@
 
