@@ -11,8 +11,9 @@ CFLAGS=-I./src/include -fleading-underscore -O -ffreestanding -finline-functions
 LDFLAGS=-T./src/link.ld
 ASFLAGS=-felf
 
-SOURCES= $(shell ls src/*.c)
-OBJECTS= $(SOURCES:.c=.o)
+C_SOURCES = $(shell ls src/*.c)
+ASM_SOURCES = $(shell ls src/*.s)
+OBJECTS	= $(ASM_SOURCES:.s=.o) $(C_SOURCES:.c=.o)
 
 all: $(OBJECTS) link
 clean:
