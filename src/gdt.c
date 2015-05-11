@@ -25,7 +25,7 @@ struct gdt_ptr
     unsigned int   base;
 } __attribute__((packed));
 
-struct gdt_entry gdt[3];    // 3 Entry GDT; Null, Code, & Data
+struct gdt_entry gdt[5];    // 3 Entry GDT; Null, Code, & Data
 struct gdt_ptr gp;          // Pointer to that GDT
 
 extern void gdt_flush();    // Function in start.s 
@@ -56,6 +56,9 @@ void gdt_install()
     gdt_set_gate(0, 0, 0, 0, 0);                // 1st Descriptor is null
     gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code Segment, Kernel Mode
     gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data Segment, Kernel Mode
+    gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // Code Segment, User Mode
+    gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // Data Segment, User Mode
+    
 
     gdt_flush();                                // Tell CPU we have a new GDT
 }

@@ -9,6 +9,7 @@
 
 #include <mboot.h>
 #include <command.h>
+#include <stdint.h>
 
 typedef int size_t;
 
@@ -25,6 +26,9 @@ struct regs
 extern unsigned short *memsetw(unsigned short *dest, unsigned short val, size_t count);
 extern unsigned char inportb (unsigned short _port);
 extern void outportb (unsigned short _port, unsigned char _data);
+extern uint32_t inl (uint16_t port);
+extern void outl (uint16_t port, uint32_t data);
+
 
 /* SCRN.C */
 extern void init_video(void);
@@ -34,6 +38,9 @@ extern void putch(char c);
 extern void cls();
 extern void shell_csr_fix();
 extern void putd(int n);
+extern void itoa(unsigned i,unsigned base,char* buf);
+extern void pad (char * instr,int padnum, char padchar);
+extern void putx(int n);
 
 /* GDT.C */
 extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);

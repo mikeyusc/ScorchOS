@@ -133,6 +133,18 @@ void puts(char *text)
     }
 }
 
+void putx(int n)
+{
+    char tembuf[64];
+    
+    itoa(n,16,tembuf);
+    puts(tembuf);
+    
+
+}
+
+
+
 void putd(int n)
     /// Output a base 10 number to the screen
 {
@@ -157,6 +169,62 @@ void putd(int n)
 		c2[i--] = c1[j++];
 	}
 	puts(c2);       // Output c2 to screen
+}
+
+void pad (char * instr,int padnum, char padchar)
+{
+    int len = strlen(instr);
+    if (len>=padnum) return;
+    char temp[64];
+    memset(temp,padchar,64);
+    
+    int i,j;
+    j=0;
+    
+    
+    for(i=padnum-len;i<padnum;i++,j++)
+    {
+        temp[i]=instr[j];
+        
+    }
+    temp[i]=0;
+    
+    for(i=0;i<padnum;i++)
+    {
+        instr[i]=temp[i];
+    }
+    instr[i]=0;
+    
+    
+}
+
+
+
+char tbuf[32];
+char bchars[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+
+void itoa(unsigned i,unsigned base,char* buf) {
+    int pos = 0;
+    int opos = 0;
+    int top = 0;
+    
+    if (i == 0 || base > 16) {
+        buf[0] = '0';
+        buf[1] = '\0';
+        
+        return;
+    }
+    
+    while (i != 0) {
+        tbuf[pos] = bchars[i % base];
+        pos++;
+        i /= base;
+    }
+    top=pos--;
+    for (opos=0; opos<top; pos--,opos++) {
+        buf[opos] = tbuf[pos];
+    }
+    buf[opos] = 0;
 }
 
 void settextcolor(unsigned char forecolor, unsigned char backcolor)

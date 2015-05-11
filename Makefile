@@ -3,13 +3,13 @@
 # Requirements are nasm, and a i586 cross compiler
 # Directions to download is at http://wiki.osdev.org/GCC_Cross-Compiler_on_Debian_Linux
 
-C_COMPILER=i586-elf-gcc
+C_COMPILER=i686-elf-gcc
 ASM_COMPILER=nasm
-LINKER=i586-elf-ld
+LINKER=i686-elf-ld
 
-CFLAGS=-I./src/include -fleading-underscore -O -ffreestanding -finline-functions-called-once -nostdlib
+CFLAGS=-I./src/include -std=gnu99 -fleading-underscore -O -ffreestanding -finline-functions-called-once -nostdlib
 LDFLAGS=-T./src/link.ld
-ASFLAGS=-felf
+ASFLAGS=-felf -I$(CURDIR)/src/
 
 C_SOURCES = $(shell ls src/*.c)
 ASM_SOURCES = $(shell ls src/*.s)
