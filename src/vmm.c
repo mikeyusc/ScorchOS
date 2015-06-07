@@ -11,7 +11,7 @@
 #include "vmm.h"
 #include "pmm.h"
 
-
+#define SATA_BASE 0xF0806000
 
 //! page table represents 4mb address space
 #define PTABLE_ADDR_SPACE_SIZE 0x400000
@@ -19,8 +19,7 @@
 //! directory table represents 4gb address space
 #define DTABLE_ADDR_SPACE_SIZE 0x100000000
 
-//! page sizes are 4k
-#define PAGE_SIZE 4096
+
 
 
 
@@ -136,9 +135,29 @@ void vmmngr_initialize () {
     if (!table2)
         return;
     
+    ptable* table3 = (ptable*) pmmngr_alloc_block ();
+    if (!table3)
+        return;
+
+    
+    
     //! clear page table
     memset (table, 0, sizeof (ptable));
     memset (table2, 0, sizeof (ptable));
+    //memset (table3, 0, sizeof (ptable));
+    
+//    //! IO Mem idenitity mapped
+//    for (int i=0, frame=SATA_BASE, virt=SATA_BASE; i<1024; i++, frame+=4096, virt+=4096) {
+//        
+//        //! create a new page
+//        pt_entry page=0;
+//        pt_entry_add_attrib (&page, I86_PTE_PRESENT | I86_PTE_WRITABLE);
+//        pt_entry_set_frame (&page, frame);
+//        
+//        //! ...and add it to the page table
+//        table3->m_entries [PAGE_TABLE_INDEX (virt) ] = page;
+//    }
+//
     
     //! 1st 4mb are idenitity mapped
     for (int i=0, frame=0x0, virt=0x00000000; i<1024; i++, frame+=4096, virt+=4096) {
@@ -182,6 +201,11 @@ void vmmngr_initialize () {
     pd_entry_add_attrib (entry2, I86_PDE_PRESENT);
     pd_entry_add_attrib (entry2, I86_PDE_WRITABLE);
     pd_entry_set_frame (entry2, (physical_addr)table2);
+    
+//    pd_entry* entry3 = &dir->m_entries [PAGE_DIRECTORY_INDEX (SATA_BASE) ];
+//    pd_entry_add_attrib (entry3, I86_PDE_PRESENT);
+//    pd_entry_add_attrib (entry3, I86_PDE_WRITABLE);
+//    pd_entry_set_frame (entry3, (physical_addr)table3);
     
     //! store current PDBR
     _cur_pdbr = (physical_addr) &dir->m_entries;
@@ -251,6 +275,71 @@ void vmmngr_unmapPageTable (pdirectory* dir, uint32_t virt) {
         pmmngr_free_block (frame);
         pagedir [virt >> 22] = 0;
     }
+}
+
+
+
+bool vmmngr_alloc_pages_at_virtual_address(uint32_t num_pages,uint32_t virt)
+{
+    
+    pdirectory * dir = _cur_directory;
+    if (vmmngr_getPhysicalAddress(dir,virt)!=0)
+    {
+        return false;
+    }
+    
+    void * blocks = pmmngr_alloc_blocks(num_pages);
+    
+    if(!blocks) return false;
+    uint32_t start = virt;
+    
+    for(uint32_t i = 0;i<num_pages; i++, start+=4096, blocks+=4096)
+    {
+        vmmngr_mapPhysicalAddress(dir,start,blocks,I86_PTE_PRESENT | I86_PTE_WRITABLE);
+    }
+    
+    
+    return true;
+}
+
+bool vmmngr_dealloc_pages_at_virtual_address(uint32_t num_pages,uint32_t virt)
+{
+    pdirectory * dir = _cur_directory;
+    if (vmmngr_getPhysicalAddress(dir,virt)!=0)
+    {
+        return false;
+    }
+    
+    uint32_t start = virt;
+
+    for(uint32_t i = 0;i<num_pages; i++, start+=4096)
+    {
+        //physical_addr * phys = vmmngr_getPhysicalAddress(dir,virt);
+        
+        
+        vmmngr_unmapPhysicalAddress(dir,start);
+    }
+    
+    return true;
+    
+    
+    
+}
+
+
+
+void vmmngr_identMap(uint32_t virt, uint32_t size)
+{
+    pdirectory * dir = _cur_directory;
+    uint32_t start = virt;
+    
+    uint32_t num_pages = (size/PAGE_SIZE) + ((size % PAGE_SIZE)>0? 1:0);
+    
+    for(uint32_t i = 0;i<num_pages; i++, start+=4096)
+    {
+        vmmngr_mapPhysicalAddress(dir,start,start,I86_PTE_PRESENT | I86_PTE_WRITABLE);
+    }
+    
 }
 
 /**

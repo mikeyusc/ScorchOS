@@ -20,6 +20,10 @@ typedef uint32_t virtual_addr;
 #define PAGES_PER_TABLE 1024
 #define PAGES_PER_DIR	1024
 
+//! page sizes are 4k
+#define PAGE_SIZE 4096
+
+
 
 //! page table
 typedef struct {
@@ -70,6 +74,14 @@ extern void vmmngr_pdirectory_clear (pdirectory* dir);
 
 //! get directory entry from directory table
 extern pd_entry* vmmngr_pdirectory_lookup_entry (pdirectory* p, virtual_addr addr);
+
+//! identiy map region of memory
+extern void vmmngr_identMap(uint32_t virt, uint32_t size);
+
+//! map pages at virtual address
+extern bool vmmngr_alloc_pages_at_virtual_address(uint32_t num_pages,uint32_t virt);
+
+extern bool vmmngr_dealloc_pages_at_virtual_address(uint32_t num_pages,uint32_t virt);
 
 /*
 	New additions for chapter 24

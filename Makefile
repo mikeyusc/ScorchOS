@@ -7,7 +7,7 @@ C_COMPILER=i686-elf-gcc
 ASM_COMPILER=nasm
 LINKER=i686-elf-ld
 
-CFLAGS=-I./src/include -std=gnu99 -fleading-underscore -O -ffreestanding -finline-functions-called-once -nostdlib
+CFLAGS=-I./src/include -std=gnu99 -fleading-underscore -O -ffreestanding -finline-functions-called-once -nostdlib -Werror=implicit-function-declaration
 LDFLAGS=-T./src/link.ld
 ASFLAGS=-felf -I$(CURDIR)/src/
 

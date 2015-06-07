@@ -11,9 +11,18 @@
 void *memcpy(void *dst, const void *src, size_t len)
     /// Copy block of memory from src to dst, len bytes long
 {
+    
+   
     char *sp = (char*) src;
     char *dp = (char*) dst;
-    for(; len != 0; len--) *dp++ = *sp++;
+    for(; len != 0; len--)
+    {
+ 
+        
+        
+        
+        *dp++ = *sp++;
+    }
 	return dst;
 }
 

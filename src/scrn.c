@@ -11,6 +11,8 @@
 unsigned short *textmemptr;     // Pointer to VGA Base RAM
 int attrib = 0x0F;              // Standard Color of screen
 int csr_x = 0, csr_y = 0;       // Cursor x / y
+int save_x=0, save_y=0;
+
 
 void scroll(void)
     /// Scroll the screen up a line when we hit the bottom of the usable
@@ -55,6 +57,27 @@ void move_csr(void)
     outportb(0x3D5, temp >> 8); // Send the high byte across the bus
     outportb(0x3D4, 15);        // CRT Control Register: Select Send Low byte
     outportb(0x3D5, temp);      // Send the Low byte of the cursor location
+}
+
+void moveto(int x, int y)
+{
+    csr_x=x; csr_y=y;
+    move_csr();
+    
+}
+
+void pushcsr()
+{
+    save_x=csr_x;
+    save_y=csr_y;
+    
+}
+
+void popcsr()
+{
+    csr_x=save_x;
+    csr_y=save_y;
+    move_csr();
 }
 
 
@@ -138,9 +161,25 @@ void putx(int n)
     char tembuf[64];
     
     itoa(n,16,tembuf);
+    
+    
+    pad(&tembuf,4,'0');
+    
     puts(tembuf);
     
 
+}
+
+void putlx(long long n)
+{
+    
+    unsigned int high, low;
+    
+    low=n & 0xFFFF;
+    high=n >> 16 & 0xFFFF;
+    
+    putx(high); putx(low);
+    
 }
 
 

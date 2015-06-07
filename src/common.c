@@ -27,8 +27,7 @@ void outportb (unsigned short _port, unsigned char _data)
 	__asm__ __volatile__ ("outb %1, %0" : : "dN" (_port), "a" (_data));
 }
 
-static inline uint8_t
-inb (uint16_t port)
+uint8_t inb (uint16_t port)
 {
     /* See [IA32-v2a] "IN". */
     uint8_t data;
@@ -36,15 +35,14 @@ inb (uint16_t port)
     return data;
 }
 
-static inline void
-outb (uint16_t port, uint8_t data)
+void outb (uint16_t port, uint8_t data)
 {
     /* See [IA32-v2b] "OUT". */
     asm volatile ("outb %b0, %w1" : : "a" (data), "Nd" (port));
 }
 
 
-static inline uint16_t
+uint16_t
 inw (uint16_t port)
 {
     uint16_t data;
@@ -53,8 +51,7 @@ inw (uint16_t port)
     return data;
 }
 
-static inline void
-outw (uint16_t port, uint16_t data)
+void outw (uint16_t port, uint16_t data)
 {
     /* See [IA32-v2b] "OUT". */
     asm volatile ("outw %w0, %w1" : : "a" (data), "Nd" (port));

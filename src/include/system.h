@@ -1,3 +1,4 @@
+
 /*
 ** Copyright 2008-12 ScorchOS Developers
 ** See doc/License.txt for terms of use.
@@ -10,6 +11,7 @@
 #include <mboot.h>
 #include <command.h>
 #include <stdint.h>
+
 
 typedef int size_t;
 
@@ -28,6 +30,19 @@ extern unsigned char inportb (unsigned short _port);
 extern void outportb (unsigned short _port, unsigned char _data);
 extern uint32_t inl (uint16_t port);
 extern void outl (uint16_t port, uint32_t data);
+extern uint16_t inw (uint16_t port);
+extern void outw (uint16_t port, uint16_t data);
+extern void outb (uint16_t port, uint8_t data);
+extern uint8_t inb (uint16_t port);
+
+/* HEAP.C */
+extern bool init_heap(void);
+extern void     *malloc(size_t);				//< The standard function.
+extern void     *realloc(void *, size_t);		//< The standard function.
+extern void     *calloc(size_t, size_t);		//< The standard function.
+extern void      free(void *);					//< The standard function.
+
+
 
 
 /* SCRN.C */
@@ -41,6 +56,10 @@ extern void putd(int n);
 extern void itoa(unsigned i,unsigned base,char* buf);
 extern void pad (char * instr,int padnum, char padchar);
 extern void putx(int n);
+extern void putlx(long long n);
+extern void moveto(int x, int y);
+extern void pushcsr();
+extern void popcsr();
 
 /* GDT.C */
 extern void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran);
@@ -59,7 +78,7 @@ extern void irq_uninstall_handler(int irq);
 extern void irq_install();
 
 /* TIMER.C */
-extern void timer_wait(int ticks);
+extern void wait(int ticks);
 extern void timer_install();
 
 /* KB.C */
