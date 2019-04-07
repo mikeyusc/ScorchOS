@@ -9,8 +9,8 @@
 #include <system.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "dma.h"
-#include "flpydsk.h"
+#include <dma.h>
+#include <flpydsk.h>
 
 
 /*
@@ -197,7 +197,7 @@ bool dma_initialize_floppy(uint8_t* buffer, unsigned length){
 
    dma_set_address( FDC_DMA_CHANNEL, a.byte[0],a.byte[1]);//Buffer address
    dma_set_external_page_register(FDC_DMA_CHANNEL,a.byte[3]);
-    
+
    dma_reset_flipflop( 1 );//Flipflop reset on DMA 1
 
    dma_set_count( FDC_DMA_CHANNEL, c.byte[0],c.byte[1]);//Set count
@@ -270,12 +270,12 @@ static void flpydsk_wait_irq () {
 //!	floppy disk irq handler
 void i86_flpy_irq(struct regs *r)
 {
-    
-    
+
+
     	//! irq fired
 	_FloppyDiskIRQ = 1;
 
-	
+
 }
 
 /**
@@ -390,11 +390,11 @@ void flpydsk_reset () {
 
 	//! reset the controller
 	flpydsk_disable_controller ();
-    
+
 	flpydsk_enable_controller ();
-    
+
 	flpydsk_wait_irq ();
-   
+
 
 	//! send CHECK_INT/SENSE INTERRUPT command to all drives
 	//for (int i=0; i<4; i++)
@@ -426,7 +426,7 @@ void flpydsk_read_sector_imp (uint8_t head, uint8_t track, uint8_t sector) {
 	if(!dma_initialize_floppy ((uint8_t*) DMA_BUFFER, 512 ))
     {
         puts("DMA INIT FAILED!");
-        
+
     }
 
 	//! set the DMA for read transfer
@@ -446,7 +446,7 @@ void flpydsk_read_sector_imp (uint8_t head, uint8_t track, uint8_t sector) {
 
 	//! wait for irq
 	flpydsk_wait_irq ();
-    
+
     unsigned char st0, st1, st2, rcy, rhe, rse, bps;
 
 	//! read status info
@@ -457,16 +457,16 @@ void flpydsk_read_sector_imp (uint8_t head, uint8_t track, uint8_t sector) {
     rhe=flpydsk_read_data();
     rse=flpydsk_read_data();
     bps=flpydsk_read_data();
-    
+
     int error = 0;
-    
+
     if(st0 & 0xC0) {
         static const char * status[] =
         { 0, "error", "invalid command", "drive not ready" };
         puts("floppy_do_sector: status =");
         puts(status[st0 >> 6]);
         puts("\n");
-        
+
         error = 1;
     }
     if(st1 & 0x80) {
@@ -523,7 +523,7 @@ void flpydsk_read_sector_imp (uint8_t head, uint8_t track, uint8_t sector) {
         error = 2;
     }
 
-    
+
 
 	//! let FDC know we handled interrupt
 	flpydsk_check_int (&mst0,&cyl);
@@ -568,18 +568,18 @@ void flpydsk_lba_to_chs (int lba,int *head,int *track,int *sector) {
 void flpydsk_install (int irq) {
 
 	//! install irq handler
-	
+
     irq_install_handler(irq,i86_flpy_irq);
-    
+
 
 	//! reset the fdc
 	flpydsk_reset ();
-    
-    
+
+
 
 	//! set drive information
 	flpydsk_drive_data (13, 1, 0xf, true);
-    
+
 }
 
 //! set current working drive

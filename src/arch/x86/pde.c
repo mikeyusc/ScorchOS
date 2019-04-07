@@ -1,12 +1,12 @@
 //
 //  pde.c
-//  
+//
 //
 //  Created by Mike Evans on 5/9/15.
 //
 //
 #include <system.h>
-#include "pde.h"
+#include <pde.h>
 
 
 
@@ -44,6 +44,6 @@ inline bool pd_entry_is_4mb (pd_entry e) {
 }
 
 inline void pd_entry_enable_global (pd_entry e) {
-    
+
 }
 

@@ -9,7 +9,7 @@
 
 /// IRQ or Interrupt Request line, are 16 lines that are hardware interrupts
 /// Controlled by the PIC, Since these are hardware, they are a bit different
-/// Than software (we have to acknowledge the interrupt so the chip knows we 
+/// Than software (we have to acknowledge the interrupt so the chip knows we
 /// Got it. So they have their own functions to handle that.
 extern void irq0();
 extern void irq1();
@@ -51,15 +51,15 @@ void irq_remap(void)
     /// BIOS maps the IRQ's in such a way they conflict with the CPU exceptions
     /// We need to remap the PIC so this doesn't happen.
 {
-    outportb(0x20, 0x11);    
-    outportb(0xA0, 0x11);    
-    outportb(0x21, 0x20);    
-    outportb(0xA1, 0x28);   
+    outportb(0x20, 0x11);
+    outportb(0xA0, 0x11);
+    outportb(0x21, 0x20);
+    outportb(0xA1, 0x28);
     outportb(0x21, 0x04);
     outportb(0xA1, 0x02);
     outportb(0x21, 0x01);
     outportb(0xA1, 0x01);
-    outportb(0x21, 0x0);  
+    outportb(0x21, 0x0);
     outportb(0xA1, 0x0);
 }
 

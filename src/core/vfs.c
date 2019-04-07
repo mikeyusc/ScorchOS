@@ -1,12 +1,12 @@
 //
 //  vfs.c
-//  
+//
 //
 //  Created by Mike Evans on 6/6/15.
 //
 //
 
-#include "vfs.h"
+#include <vfs.h>
 
 
 fs_node_t *fs_root = 0; // The root of the filesystem.

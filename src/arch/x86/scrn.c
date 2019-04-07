@@ -25,13 +25,13 @@ void scroll(void)
     if(csr_y >= 25)                 // Row 25? Time to scroll.
     {
         temp = csr_y - 25 + 1;      // Move the cursor
-        
+
         // Now we move the memory up by memcpy, this is FAST
         memcpy (textmemptr, textmemptr + temp * 80, (25 - temp) * 80 * 2);
-        
+
         // Now the last line is mirrored on two lines, clear the last line
         memsetw (textmemptr + (25 - temp) * 80, blank, 80);
-        
+
         csr_y = 24;                 // The cursor is now on the blank line.
     }
 }
@@ -63,14 +63,14 @@ void moveto(int x, int y)
 {
     csr_x=x; csr_y=y;
     move_csr();
-    
+
 }
 
 void pushcsr()
 {
     save_x=csr_x;
     save_y=csr_y;
-    
+
 }
 
 void popcsr()
@@ -116,7 +116,7 @@ void putch(char c)
     {
         csr_x = (csr_x + 8) & ~(8 - 1); // Move the cursor forward modulus 8
     }
-    
+
     else if(c == '\r')  // Carriage return
     {
         csr_x = 0;      // Return the cursor to the beginning of the screen
@@ -159,27 +159,27 @@ void puts(char *text)
 void putx(int n)
 {
     char tembuf[64];
-    
+
     itoa(n,16,tembuf);
-    
-    
+
+
     pad(&tembuf,4,'0');
-    
+
     puts(tembuf);
-    
+
 
 }
 
 void putlx(long long n)
 {
-    
+
     unsigned int high, low;
-    
+
     low=n & 0xFFFF;
     high=n >> 16 & 0xFFFF;
-    
+
     putx(high); putx(low);
-    
+
 }
 
 
@@ -196,12 +196,12 @@ void putd(int n)
 		putch('0');     // Number is a 0, we lucked out.
 		return;
 	}
-    
+
 	for(i = 0; n; n /= 10, i++) // Loop, each time, divide by 10.
 	{
 		c1[i] = '0' + n % 10;   // Spit out the least significant digit
 	}
-	c1[i] = '\0';   // Set the end of the number as end of string 
+	c1[i] = '\0';   // Set the end of the number as end of string
 	c2[i--] = 0;    // Not sure why this is here, Not gonna argue...
 	while(i >= 0)   // Copy c1 to c2
 	{
@@ -216,25 +216,25 @@ void pad (char * instr,int padnum, char padchar)
     if (len>=padnum) return;
     char temp[64];
     memset(temp,padchar,64);
-    
+
     int i,j;
     j=0;
-    
-    
+
+
     for(i=padnum-len;i<padnum;i++,j++)
     {
         temp[i]=instr[j];
-        
+
     }
     temp[i]=0;
-    
+
     for(i=0;i<padnum;i++)
     {
         instr[i]=temp[i];
     }
     instr[i]=0;
-    
-    
+
+
 }
 
 
@@ -246,14 +246,14 @@ void itoa(unsigned i,unsigned base,char* buf) {
     int pos = 0;
     int opos = 0;
     int top = 0;
-    
+
     if (i == 0 || base > 16) {
         buf[0] = '0';
         buf[1] = '\0';
-        
+
         return;
     }
-    
+
     while (i != 0) {
         tbuf[pos] = bchars[i % base];
         pos++;

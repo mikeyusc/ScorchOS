@@ -2,7 +2,7 @@
 ** Copyright 2008-11 ScorchOS Developers
 ** See doc/License.txt for terms of use.
 **
-** PS/2 Driver & Keyboard Scancode Decoder 
+** PS/2 Driver & Keyboard Scancode Decoder
 ** Improved by Primis
 */
 
@@ -12,19 +12,19 @@
 /// These are static Variables, They are the control lines of the keyboard;
     /// shift, caps, ctrl, ect.
 
-unsigned char shift = 0;            // Shift Key Status 
+unsigned char shift = 0;            // Shift Key Status
 unsigned char ctrl = 0;             // Ctrl Key Status
-unsigned char alt = 0;              // Alt Key Status 
+unsigned char alt = 0;              // Alt Key Status
 unsigned char caps = 0;             // Caps Lock Status
-unsigned char num = 0;              // Num Lock Status 
-unsigned char keyBuff[257];         // Keybuffer 
+unsigned char num = 0;              // Num Lock Status
+unsigned char keyBuff[257];         // Keybuffer
 volatile unsigned char keyBuffEnd = 0;  // The Last key in the buffer
 unsigned char asciiCode;            // The ASCII Code
 unsigned char leds = 0;             // The Three LED's on the keyboard.
 unsigned char echoON = 1;           // Echo keys
-unsigned char kbScanCodes[512] =    
+unsigned char kbScanCodes[512] =
     /// Keyboard character maps (Look-up table)
-{					
+{
 	0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
 	'\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[' , ']', '\n', 0,
 	'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', 0,
@@ -80,7 +80,7 @@ void FlushBuffer()
 	do
 	{
 		temp = inportb(0x64);
-		if((temp & 0x01) != 0) 
+		if((temp & 0x01) != 0)
 		{
 			(void)inportb(0x60);
 			continue;
@@ -92,7 +92,7 @@ void FlushBuffer()
 int kb_special(unsigned char key)
 {
 	static int specKeyUp = 1;	// Is a key already been or being pressed?
-	switch(key) 
+	switch(key)
 	{
 		case 0x36: // R-Shift down
 		case 0x2A: // L-Shift down
@@ -115,7 +115,7 @@ int kb_special(unsigned char key)
 			alt = 0;
 			break;
 		case 0x3A: // Caps down
-			if(specKeyUp == 1) 
+			if(specKeyUp == 1)
 			{
 				caps = !caps;
 				UpdateLeds(CapsLock);
@@ -159,8 +159,8 @@ void keyboard_handler(struct regs *r)
 	unsigned char scanCode;
 	scanCode = inportb(0x60);
 	unsigned char asciiCode;
-	
-	
+
+
 	if(!(kb_special(scanCode) | (scanCode >= 0x80)))
 	{
 		if(shift)		//Determine key that has been pressed
@@ -207,7 +207,7 @@ void waitKey()
 	while (getchar() == 0);
 }
 
-char *gets(char *s) 
+char *gets(char *s)
     /// Get a String from stdin (keyboard)
 {
 	int i;

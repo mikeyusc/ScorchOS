@@ -1,12 +1,12 @@
 //
 //  pte.c
-//  
+//
 //
 //  Created by Mike Evans on 5/9/15.
 //
 //
 
-#include "pte.h"
+#include <pte.h>
 
 inline void pt_entry_add_attrib (pt_entry* e, uint32_t attrib) {
     *e |= attrib;

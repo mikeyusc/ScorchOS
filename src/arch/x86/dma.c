@@ -8,7 +8,7 @@
 
 
 #include <system.h>
-#include "dma.h"
+#include <dma.h>
 
 
 //! masks a channel

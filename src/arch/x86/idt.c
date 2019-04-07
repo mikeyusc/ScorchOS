@@ -6,7 +6,7 @@
 */
 
 #include <system.h>
-#include <string.h> 
+#include <string.h>
 
 extern void idt_load();     // From 'start.asm', Loads the IDT to the CPU
 

@@ -28,7 +28,7 @@ struct gdt_ptr
 struct gdt_entry gdt[5];    // 3 Entry GDT; Null, Code, & Data
 struct gdt_ptr gp;          // Pointer to that GDT
 
-extern void gdt_flush();    // Function in start.s 
+extern void gdt_flush();    // Function in start.s
 
 void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
     /// Set up a descriptor in the Table, it's cause we're lazy
@@ -58,7 +58,7 @@ void gdt_install()
     gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data Segment, Kernel Mode
     gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // Code Segment, User Mode
     gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // Data Segment, User Mode
-    
+
 
     gdt_flush();                                // Tell CPU we have a new GDT
 }

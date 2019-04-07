@@ -10,15 +10,15 @@
 volatile int PIC_ticks = 0; // Volatile to avoid infinite loops in optimization.
 
 void PIC_handler(struct regs *r)
-/// Callback from ISR 0 
-{ 
+/// Callback from ISR 0
+{
 	PIC_ticks++;            // Increment Tick count
 //    pushcsr();
 //    moveto(0,0);
 //    putd(PIC_ticks);
 //    popcsr();
-    
-} 
+
+}
 
 void wait(int ticks)
 /// Hold the system until specified time is reached

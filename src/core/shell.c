@@ -2,7 +2,7 @@
 ** Copyright 2008-11 ScorchOS Developers
 **   See doc/License.txt for terms of use.
 **
-** ScorchOS Shell 
+** ScorchOS Shell
 ** Parses input and executes shell functions
 */
 
@@ -73,7 +73,7 @@ void initShell()
 	clearCommands();
 	puts("Username: ");
 	gets(prompt);
-	strcat(prompt, "$ "); 
+	strcat(prompt, "$ ");
 	cls();
 	cmdString[0] = 0;
 	cmdSwitch0[0] = 0;
@@ -211,7 +211,7 @@ int atoi(const char *nptr)
   if (c == '-' || c == '+') c = (int)(unsigned char) *nptr++;
 
   total = 0;
-  while (('0'<= c) && (c <='9')) 
+  while (('0'<= c) && (c <='9'))
   {
     total = 10 * total + (c - '0');
     c = (int)(unsigned char) *nptr++;
@@ -221,7 +221,7 @@ int atoi(const char *nptr)
     return -total;
   else
     return total;
-}		
+}
 
 void exponentMe()
 {
@@ -229,11 +229,11 @@ void exponentMe()
 	a = atoi(cmdSwitch0);
 	b = atoi(cmdSwitch0);
 	c = atoi(cmdSwitch1);
-	
+
 	if (c == 0)
 	{
 		putd(1);
-	}	
+	}
 	else
 	{
 		for (; c > 1; c--)
@@ -245,7 +245,7 @@ void exponentMe()
 }
 
 void addMe()
-{	
+{
 	int a, b;
 	a = atoi(cmdSwitch0);
 	b = atoi(cmdSwitch1);
@@ -253,7 +253,7 @@ void addMe()
 	puts(cmdSwitch0);
 	puts(" + ");
 	puts(cmdSwitch1);
-	puts(" = ");	
+	puts(" = ");
 	putd(a+b);
 }
 
@@ -266,6 +266,6 @@ void subtractMe()
 	puts(cmdSwitch0);
 	puts(" - ");
 	puts(cmdSwitch1);
-	puts(" = ");	
+	puts(" = ");
 	putd(a-b);
 }

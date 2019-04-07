@@ -11,16 +11,16 @@
 void *memcpy(void *dst, const void *src, size_t len)
     /// Copy block of memory from src to dst, len bytes long
 {
-    
-   
+
+
     char *sp = (char*) src;
     char *dp = (char*) dst;
     for(; len != 0; len--)
     {
- 
-        
-        
-        
+
+
+
+
         *dp++ = *sp++;
     }
 	return dst;
@@ -48,7 +48,7 @@ int memcmp(const void *s1, const void *s2, size_t n)
 	return 0;
 }
 
-char *strchr(const char *s, int c) 
+char *strchr(const char *s, int c)
     /// Break a string on a charecter
 {
 	while (*s != (char)c)
@@ -83,7 +83,7 @@ char *strtok(char *str, const char *delim)
 	static char* p=0;
 	if(str)  	/* Does the string exist? */
 		p=str;	/* If so, change p to current position. */
-	else if(!p) 
+	else if(!p)
 		return 0; /* Otherwise, exit null. */
 	str = p   + strspn(p,delim);
 	p   = str + strcspn(str,delim);
@@ -141,7 +141,7 @@ int strncmp(const char *s1, const char *s2, size_t n)
 }
 
 char *strcpy(char *dest, char *src)
-    /// Copy null terminated src to dest 
+    /// Copy null terminated src to dest
 {
     do
     {
